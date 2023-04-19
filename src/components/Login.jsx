@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import AuthProviders, { AuthContext } from "../providers/AuthProviders";
 
 const Login = () => {
-  const { user, singIn } = useContext(AuthContext);
-  console.log(user);
+  const { singIn, googleSignIn } = useContext(AuthContext);
+  //   console.log(user);
 
   const handleLogin = (e) => {
     e.preventDefault();
@@ -19,9 +19,22 @@ const Login = () => {
       .then((result) => {
         const loggedUser = result.user;
         console.log(loggedUser);
+        form.reset();
       })
       .catch((err) => {
         console.log(err.message);
+      });
+  };
+
+  const handleGoogleLogin = () => {
+    googleSignIn()
+      .then((result) => {
+        const loggedUser = result.user;
+        console.log(loggedUser);
+        form.reset();
+      })
+      .catch((error) => {
+        console.log(error.message);
       });
   };
   return (
@@ -69,6 +82,14 @@ const Login = () => {
                 <button className="btn btn-primary">Login</button>
               </div>
             </form>
+            <div>
+              <button
+                onClick={handleGoogleLogin}
+                className="btn btn-outline btn-success mb-2 ml-8"
+              >
+                Google
+              </button>
+            </div>
           </div>
         </div>
       </div>
